@@ -1,0 +1,97 @@
+what----》
+spring是什么?
+	Spring是一个分层的JavaSE/EE full-stack(一站式) 轻量级开源框架,
+	因此它将面向接口的编程思想贯穿整个系统应用
+	主要负责创建Bean以及维护Bean之间的关系
+
+why----》
+为什么使用Spring?
+	他解决的是业务逻辑层和其他各层的松耦合问题.
+Spring框架核心
+	IOC和AOP：IOC 控制反转，把创建对象的权利交给框架，目的是减少耦合。
+
+How----》如何使用：
+1.步骤
+	1.创建Maven项目-》创建配置文件
+	2.获取spring的IOC核心容器，并提供xxx.xml配置文件的存储位置
+	用Application接口，有三个常用实现类，
+	方法getBean("id")，通过id获取Bean对象
+
+2.xxx.xml配置文件的内容：
+(1)创建Bean对象的三种方式：
+	构造方法创建，工厂类创建，静态方法创建
+Bean的作用范围：通过scope属性指定
+	生命周期：单例跟容器的生命周期一致
+
+(2)IOC注入（创建对象或基本类型，或者集合）：
+三种方式：
+构造注入：使用标签constructor-org
+set注入：使用标签property，注入基本类型和复杂的集合
+注解注入1：在类中配置，但xxx.xml配置文件需要配置一些信息告知spring
+	A.创建对象（作用在类上）：
+				Component注解，用于把当前类对象存入spring容器中
+			   	Controller注解，用在表现层
+			   	Service注解，用于服务层
+			   	Repository注解，用于持久层
+	总结：四个注解作用跟属性一样，后三个分层更清晰
+	B.注入数据（在变量或者方法上操作）：
+				Autowired注解，自动按照类型注入（没有任何bean类型和注入的类型匹配时或者有多个类型匹配时，报错）
+				Qualifier注解，不能独立使用，跟前一个配合用,属性value，指定bean的id
+				Resource注解，直接按照bean的id注入，可单独使用，属性name指定id
+	总结，以上三种智能注入bean类型的数据，基本类型、string、和集合只能通过xml实现。
+				value注解，注入基本类型和string类型，属性value,指定数据的值，可以使用spring中的SpEL表达式，
+						写法：${表达式}
+	C.用于改变作用范围（使用在类上）：Scope注解，属性value,常取值singleton和prototype
+	D.和生命周期相关（了解，作用在类上）：PreDestroy注解，指定销毁、初始化方法
+================================================
+注解注入2:使用配置类替代xml配置文件，作用一样
+	spring中的新注解：
+		Configuration（作用在类上）:指定当前类是一个配置类
+			细节：配置类作为AnnotationConfigApplicationContext对象创建的参数时，可以不加此注解
+		ComponentScan（作用在类上）：用于通过注解指定spring在创建容器时要扫描的包
+			属性：value和八色Packages的作用一样，都是指定容器要扫描的包
+			使用此注解等同于
+			<context:component-scan base-package="com.itheima.*"/>
+		Bean（（作用在方法上））：用于把当前方法的返回值作为bean对象存入spring的ioc容器中
+			属性：name:用于指定bean的id，当不写默认当前方法的名称
+			细节：当我们使用注解配置方法时，如果方法有参数，spring框架会去容器中查找有没有可用的bean对象，
+				查找的方式跟Autowired注解的作用一样的
+		Import（作用在类上）：作用用于导入其他的配置类
+			属性：value用于指定其他配置类的字节码，当使用import注解之后，有import注解的类就是父配置类，而导入的都是子配置类
+		PropertySource:用于指定properties文件的位置类
+			属性：value:指定文件的名称和路径，
+				关键字：classpath 表示类路径下
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
