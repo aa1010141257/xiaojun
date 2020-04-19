@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 配置service -->
+
+    <bean id="iUserService" class="com.itheima.service.impl.UserServiceImpl" >
+        <property name="iUserDao" ref="iUserDao"></property>
+    </bean>
+
+    <!-- 配置Dao对象 -->
+    <bean id="iUserDao" class="com.itheima.dao.impl.UserDaoImp">
+        <!-- 注入QueryRunner -->
+        <property name="query" ref="runner"></property>
+
+    </bean>
+    <bean id="runner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <!-- 注入数据源 -->
+        <constructor-arg name="ds" ref="dataSource"></constructor-arg>
+    </bean>
+    <!-- 配置数据源对象 -->
+    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="" />
+        <property name="user" value="root"/>
+        <property name="password" value="aa12345678"/>-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="root"></property>
+        <property name="password" value="aa12345678"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test_db?useUnicode=true&amp;characterEncoding=utf8"></property>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+    </bean>
+</beans>
